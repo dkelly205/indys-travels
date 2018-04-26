@@ -55,6 +55,23 @@ class MapContainer extends React.Component {
 		});
 
 		line.setMap(this.map);
+
+		let lastPoint = _.last(this.state.points);
+
+		let infoWindow = new this.maps.InfoWindow({
+			content: lastPoint.text
+		});
+
+		let marker = new this.maps.Marker({
+			position: lastPoint,
+			map: this.map
+		});
+
+		marker.addListener("click", (event) => {
+			infoWindow.open(this.map, marker);
+		});
+
+		this.map.setCenter(lastPoint);
 	}
 
 	render(){
