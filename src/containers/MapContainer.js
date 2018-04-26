@@ -71,7 +71,7 @@ class MapContainer extends React.Component {
 			infoWindow.open(this.map, marker);
 		});
 
-		this.map.setCenter(lastPoint);
+		this.map.panTo(lastPoint);
 	}
 
 	render(){
