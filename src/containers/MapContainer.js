@@ -42,19 +42,17 @@ class MapContainer extends React.Component {
 			scale: 4
 		};
 
-		let line = new this.maps.Polyline({
+		new this.maps.Polyline({
 			path: this.state.points,
 			geodesic: true,
 			strokeColor: '#ff0000',
-					strokeOpacity: 0,
-					icons: [{
+			strokeOpacity: 0,
+			icons: [{
 				icon: lineSymbol,
 				offset: '0',
 				repeat: '20px'
 			}],
-		});
-
-		line.setMap(this.map);
+		}).setMap(this.map);
 
 		let lastPoint = _.last(this.state.points);
 
@@ -72,6 +70,11 @@ class MapContainer extends React.Component {
 		});
 
 		this.map.panTo(lastPoint);
+		this.maps.event.addListenerOnce(this.map, 'idle', () => {
+			setTimeout(() => {
+				this.map.setZoom(lastPoint.zoom);
+			}, 250);
+		});
 	}
 
 	render(){
