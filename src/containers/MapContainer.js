@@ -31,31 +31,34 @@ class MapContainer extends React.Component {
 				this.setState({
 					points: [...this.state.points, point]
 				}, () => {
-					this.renderPolylines();
+					this.renderPointOnMap();
 				});
 			}
 		}else if(!point && this.state.markers.length){
-			// clear the map
-			for(let marker of this.state.markers){
-				marker.setMap(null);
-			}
-
-			for(let line of this.state.lines){
-				line.setMap(null);
-			}
-
-			this.setState({
-				points: [],
-				markers: [],
-				lines: []
-			});
-
-			this.map.panTo(new this.maps.LatLng(0, 0));
-			this.map.setZoom(4);
+			this.clearMap();
 		}
 	}
 
-	renderPolylines(){
+	clearMap(){
+		for(let marker of this.state.markers){
+			marker.setMap(null);
+		}
+
+		for(let line of this.state.lines){
+			line.setMap(null);
+		}
+
+		this.setState({
+			points: [],
+			markers: [],
+			lines: []
+		});
+
+		this.map.panTo(new this.maps.LatLng(0, 0));
+		this.map.setZoom(4);
+	}
+
+	renderLine(){
 		let lineSymbol = {
 			path: 'M 0,-1 0,1',
 			strokeOpacity: 1,
@@ -77,15 +80,15 @@ class MapContainer extends React.Component {
 		line.setMap(this.map);
 
 		this.setState({lines: [...this.state.lines, line]});
+	}
 
-		let lastPoint = _.last(this.state.points);
-
+	renderMarker(point){
 		let infoWindow = new this.maps.InfoWindow({
-			content: lastPoint.text
+			content: point.text
 		});
 
 		let marker = new this.maps.Marker({
-			position: lastPoint,
+			position: point,
 			map: this.map
 		});
 
@@ -94,13 +97,23 @@ class MapContainer extends React.Component {
 		});
 
 		this.setState({markers: [...this.state.markers, marker]});
+	}
 
-		this.map.panTo(lastPoint);
+	panAndZoom(point){
+		this.map.panTo(point);
 		this.maps.event.addListenerOnce(this.map, 'idle', () => {
 			setTimeout(() => {
-				this.map.setZoom(lastPoint.zoom);
+				this.map.setZoom(point.zoom);
 			}, 250);
 		});
+	}
+
+	renderPointOnMap(){
+		let lastPoint = _.last(this.state.points);
+
+		this.renderLine();
+		this.renderMarker(lastPoint);
+		this.panAndZoom(lastPoint);
 	}
 
 	render(){
