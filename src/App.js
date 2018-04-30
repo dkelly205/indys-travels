@@ -22,6 +22,7 @@ class App extends Component {
 
     this.handleJourneySelect = this.handleJourneySelect.bind(this);
     this.triggerNextPoint = this.triggerNextPoint.bind(this);
+    this.triggerReset = this.triggerReset.bind(this);
   }
 
   handleJourneySelect(journey){
@@ -36,6 +37,14 @@ class App extends Component {
     });
   }
 
+  triggerReset(){
+    this.setState({
+      nextPointIndex: 0,
+      nextPoint: null,
+      selectedFilm: null
+    });
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -44,6 +53,7 @@ class App extends Component {
           select={this.handleJourneySelect}
           selectedFilm={this.state.selectedFilm}
           onNextButtonClicked={this.triggerNextPoint}
+          onResetButtonClicked={this.triggerReset}
         />
         <Spotify />
       </React.Fragment>

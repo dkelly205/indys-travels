@@ -11,7 +11,9 @@ class MapContainer extends React.Component {
 		this.maps = null;
 
 		this.state = {
-			points: []
+			points: [],
+			markers: [],
+			lines: []
 		};
 
 		this.storeMaps = this.storeMaps.bind(this);
@@ -32,6 +34,23 @@ class MapContainer extends React.Component {
 					this.renderPolylines();
 				});
 			}
+		}else if(!point && this.state.markers.length){
+			// clear the map
+			for(let marker of this.state.markers){
+				marker.setMap(null);
+			}
+
+			for(let line of this.state.lines){
+				line.setMap(null);
+			}
+
+			this.setState({
+				markers: [],
+				lines: []
+			});
+
+			this.map.panTo(new this.maps.LatLng(0, 0));
+			this.map.setZoom(4);
 		}
 	}
 
@@ -42,7 +61,7 @@ class MapContainer extends React.Component {
 			scale: 4
 		};
 
-		new this.maps.Polyline({
+		let line = new this.maps.Polyline({
 			path: this.state.points,
 			geodesic: true,
 			strokeColor: '#ff0000',
@@ -51,8 +70,12 @@ class MapContainer extends React.Component {
 				icon: lineSymbol,
 				offset: '0',
 				repeat: '20px'
-			}],
-		}).setMap(this.map);
+			}]
+		})
+		
+		line.setMap(this.map);
+
+		this.setState({lines: [...this.state.lines, line]});
 
 		let lastPoint = _.last(this.state.points);
 
@@ -68,6 +91,8 @@ class MapContainer extends React.Component {
 		marker.addListener("click", (event) => {
 			infoWindow.open(this.map, marker);
 		});
+
+		this.setState({markers: [...this.state.markers, marker]});
 
 		this.map.panTo(lastPoint);
 		this.maps.event.addListenerOnce(this.map, 'idle', () => {
