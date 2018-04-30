@@ -1,11 +1,75 @@
+@font-face {
+	font-family: 'Venture';
+	src: url('/fonts/Adventure.otf'); /* IE9 Compat Modes */
+	src: url('/fonts/Adventure.otf?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+	url('/fonts/Adventure.otf') format('woff2'), /* Super Modern Browsers */
+	url('/fonts/Adventure.otf') format('woff'), /* Pretty Modern Browsers */
+	url('/fonts/Adventure.otf')  format('truetype'), /* Safari, Android, iOS */
+	url('/fonts/Adventure.otf#svgFontName') format('svg'); /* Legacy iOS */
+}
+
 main {
+	font-family: Venture;
+	font: Venture;
 	position: absolute;
 	top: 0;
 	left: 0;
 	height: 40%;
-	width: 25%;
+	width: 30%;
 	background: rgba(255, 255, 255, 0.7);
 	margin: 10px 0 0 10px;
 	padding: 10px;
 	box-sizing: border-box;
+}
+
+main h1 {
+	background: -webkit-linear-gradient(#f35a24, #fcad19, #fff);
+  	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-text-stroke-width: 1px;
+	-webkit-text-stroke-color: #333;
+	letter-spacing: 2px;	  
+	font-size: 44px;
+	text-shadow: #333;
+}
+
+main ul {
+	margin: 0;
+	padding: 0;
+}
+
+main li {
+	list-style-type: none;
+}
+
+main a, main a:link, main a:visited {
+	font-size: 24px;
+	color: #000;
+	text-decoration: none;
+}
+
+main a:hover, main a:active, main a:focus {
+	background: -webkit-linear-gradient(#f35a24, #fcad19, #fff);
+  	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-text-stroke-width: 1px;
+	-webkit-text-stroke-color: #333;
+	text-shadow: #333;	
+}
+
+main button {
+	background: transparent;
+	border: 4px solid black;
+	cursor: pointer;
+	font-size: 24px;
+	margin-top: 10px;
+}
+
+main button:hover{
+	background: -webkit-linear-gradient(#f35a24, #fcad19, #fff);	
+	outline: none;
+}
+
+main button:focus {
+	outline: none;
 }
