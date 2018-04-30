@@ -81,7 +81,6 @@ class MapContainer extends React.Component {
 		return (
 			<div style={{height: "100vh", width: "100vw"}}>
 				<GoogleMapReact
-					// defaultCenter = {{lat: 39.3210, lng: -111.0937}}
 					center = {{lat: 0, lng: 0}}
 					zoom = {4}
 					options = {{styles: MapStyles}}
