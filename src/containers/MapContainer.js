@@ -45,6 +45,7 @@ class MapContainer extends React.Component {
 			}
 
 			this.setState({
+				points: [],
 				markers: [],
 				lines: []
 			});
